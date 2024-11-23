@@ -7,3 +7,4 @@ String getErrorString(String code){
       return 'Um erro indefinido ocorreu.';
   }
 }
+//ver depois no firebase outros erros
