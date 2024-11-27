@@ -19,8 +19,6 @@ class BaseScreens extends StatelessWidget {
         body: PageView(
           controller: _pageController,
           children: [
-            Login(),
-            const SignUp(),
             Scaffold(
               drawer: const DrawerCusnton(),
               appBar: AppBar(

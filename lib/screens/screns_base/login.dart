@@ -100,12 +100,13 @@ class _LoginState extends State<Login> {
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          UserLogged? userLogged = UserLogged();
                           String email = _email.text;
                           String password = _password.text;
-                          UserLogged user =
-                              UserLogged.login(email: email, password: password);
+                          userLogged.email = email;
+                          userLogged.password = password;
                           userManager.signIn(
-                              userLogged: user,
+                              userLogged: userLogged,
                               onFail: (erro) {
                                 setState(() {
                                   ScaffoldMessenger.of(context)
@@ -114,7 +115,10 @@ class _LoginState extends State<Login> {
                                     duration: const Duration(seconds: 3),
                                   ));
                                 });
-                              });
+                              },
+                          onSucess: (){
+                                Navigator.pushNamedAndRemoveUntil(context, '/base', (_)=>false);
+                          });
                         }
                       },
                       child: userManager.loading

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -9,16 +10,28 @@ class UserManager extends ChangeNotifier{
   UserManager(){
     _loadingCurrentUser();
   }
-  User? _user;
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  bool loading = false;
+  UserLogged? userLogged;
 
-  Future<void> signIn({required UserLogged userLogged,required Function onFail}) async {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  bool loading = false;
+  bool get loggedIn => userLogged != null;
+
+  Future<void> signIn({required UserLogged? userLogged,required Function onFail,required Function onSucess}) async {
     setLoading(true);
+
     try {
-      UserCredential result = await auth.signInWithEmailAndPassword(
-          email: userLogged.email, password: userLogged.password);
-      _user = result.user;
+      if(userLogged != null){
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+            email: userLogged.email!, password: userLogged.password!);
+        userLogged.id = userCredential.user?.uid;
+
+        await _loadingCurrentUser();
+        onSucess();
+      }
+
+
 
     }on FirebaseException catch(e){
       onFail(getErrorString(e.code));
@@ -28,17 +41,51 @@ class UserManager extends ChangeNotifier{
     setLoading(false);
 
   }
+  Future<void> signUp(UserLogged user,Function onFail,Function onSuccess)async {
+    print(user.email);
+    print(user.password);
+      setLoading(true);
+      try {
+        if(user.email != null || user.password != null){
+          UserCredential userCredential = await _auth
+              .createUserWithEmailAndPassword(email: user.email!, password: user.password!);
+          user.id = userCredential.user?.uid;
+          await user.saveData();
+          print('voce se cadastrou no firebase');
+          print('voce se cadastrou no firebase');
+          print('voce se cadastrou no firebase');
+          print('voce se cadastrou no firebase');
+          print('voce se cadastrou no firebase');
+
+          onSuccess();
+        }
+      }on FirebaseException catch(e){
+        onFail();
+        print(getErrorString(e.code));
+        print(e.code);
+      }
+  }
+
+
+
   void setLoading(bool value){
     loading = value;
     notifyListeners();
   }
-  _loadingCurrentUser()async{
-    User? user = auth.currentUser;
+  Future<void> _loadingCurrentUser()async{
+    User? user = _auth.currentUser;
     if(user != null){
-      _user = user;
-      print(_user?.uid);
-      print('/*************************************////////////////////**********');
+     DocumentSnapshot documentSnapshot = await _db
+         .collection('users')
+         .doc(user.uid)
+         .get();
+     userLogged = UserLogged.fromDocument(documentSnapshot);
       notifyListeners();
     }
+  }
+  signOut()async{
+    await _auth.signOut();
+    userLogged = null;
+    notifyListeners();
   }
 }

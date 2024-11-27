@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_store/models/user.dart';
+import 'package:new_store/models/user_manager.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -10,8 +12,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  UserLogged _userLogged = UserLogged();
-
+  final UserLogged _userLogged = UserLogged();
 
   final TextEditingController _nome =
       TextEditingController(text: 'Renato Firmino');
@@ -54,7 +55,7 @@ class _SignUpState extends State<SignUp> {
                       }
                       return null;
                     },
-                    onSaved: (nome)=> _userLogged.name = nome!,
+                    onSaved: (nome) => _userLogged.name = nome!,
                   ),
                 ),
                 const SizedBox(
@@ -73,7 +74,7 @@ class _SignUpState extends State<SignUp> {
                       }
                       return null;
                     },
-                    onSaved: (email)=> _userLogged.email = email!,
+                    onSaved: (email) => _userLogged.email = email!,
                   ),
                 ),
                 const SizedBox(
@@ -111,6 +112,7 @@ class _SignUpState extends State<SignUp> {
                       if (firstPassword != password) {
                         return 'as senhas percisa ser iguais';
                       }
+                      _userLogged.password = firstPassword;
                       return null;
                     },
                   ),
@@ -126,12 +128,13 @@ class _SignUpState extends State<SignUp> {
                       foregroundColor: Colors.black, // Cor do texto
                     ),
                     onPressed: () {
-                      if(_formKey.currentState!.validate()){
+                      if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         //user manager
+                        context
+                            .read<UserManager>()
+                            .signUp(_userLogged, _snackBarError, () {debugPrint('sucesso');});
                       }
-
-
                     },
                     child: const Text(
                       'Cadastra',
@@ -144,5 +147,12 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  _snackBarError() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Erro ao criar usuario'),
+      duration: Duration(seconds: 3),
+    ));
   }
 }

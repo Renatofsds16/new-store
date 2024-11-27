@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:new_store/models/user_manager.dart';
 import 'package:new_store/screens/screns_base/base_screens.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:new_store/screens/screns_base/login.dart';
 import 'package:new_store/screens/screns_base/sign_up.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
+      lazy: false,
       create: (context) => UserManager(),
       child: MaterialApp(
         initialRoute: '/base',
@@ -31,8 +33,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: (settings) {
           switch (settings.name) {
-            case 'signup':
+            case '/signup':
               return MaterialPageRoute(builder: (_) => const SignUp());
+            case '/login':
+              return MaterialPageRoute(builder: (_) => Login());
             case '/base':
             default:
               return MaterialPageRoute(builder: (_) => BaseScreens());
