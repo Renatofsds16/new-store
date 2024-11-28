@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:new_store/models/product_manager.dart';
 import 'package:new_store/models/user_manager.dart';
 import 'package:new_store/screens/screns_base/base_screens.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,9 +22,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      lazy: false,
-      create: (context) => UserManager(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=>UserManager(),lazy: false,),
+        ChangeNotifierProvider(create: (_)=>ProductManager(),lazy: false,)
+      ],
       child: MaterialApp(
         initialRoute: '/base',
         theme: ThemeData(

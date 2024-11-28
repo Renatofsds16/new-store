@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_store/models/page_manager.dart';
+import 'package:new_store/screens/screns_base/products_screesns.dart';
 import 'package:new_store/screens/screns_base/sign_up.dart';
 import 'package:provider/provider.dart';
 
@@ -26,9 +27,7 @@ class BaseScreens extends StatelessWidget {
                 title: const Text('loja virtual'),
               ),
             ),
-            Container(
-              color: Colors.blueAccent,
-            ),
+            const ProductsScreesns(),
             Container(
               color: Colors.amber,
             ),
