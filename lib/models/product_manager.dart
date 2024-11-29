@@ -8,12 +8,19 @@ class ProductManager extends ChangeNotifier{
     _loadAllProducts();
   }
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  List<Product> _allProducts = [];
+  List<Product> allProducts = [];
+  String? _seach;
+
+  String? get seach => _seach;
+
+  set seach(String? value){
+    _seach = value;
+  }
 
 
   Future<void> _loadAllProducts()async{
     final QuerySnapshot snapshotProducts = await _db.collection('products').get();
-    _allProducts = snapshotProducts.docs.map((doc)=>Product.fromDocumentSnapshot(doc)).toList();
+    allProducts = snapshotProducts.docs.map((doc)=>Product.fromDocumentSnapshot(doc)).toList();
     notifyListeners();
   }
 }

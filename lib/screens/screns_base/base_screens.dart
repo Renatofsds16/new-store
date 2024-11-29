@@ -23,8 +23,9 @@ class BaseScreens extends StatelessWidget {
             Scaffold(
               drawer: const DrawerCusnton(),
               appBar: AppBar(
+                iconTheme: const IconThemeData(color: Colors.white),
                 backgroundColor: const Color.fromARGB(255, 4, 125, 141),
-                title: const Text('loja virtual'),
+                title: const Text('loja virtual',style: TextStyle(color: Colors.white),),
               ),
             ),
             const ProductsScreesns(),
