@@ -13,37 +13,71 @@ class ProductsScreesns extends StatelessWidget {
       drawer: const DrawerCusnton(),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Produtos',
-          style: TextStyle(
-            color: Colors.white,
-          ),
+        title: Consumer<ProductManager>(
+          builder: (_, productManage,__){
+            if(productManage.seach != null){
+              return GestureDetector(
+                onTap: (){
+                  _showTextField(context);
+                },
+                child: Text(
+                  '${productManage.seach}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            }
+            else{
+              return const Text(
+                'Produtos',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              );
+            }
+        },
         ),
         backgroundColor: const Color.fromARGB(255, 4, 125, 141),
         centerTitle: true,
         actions: [
-          IconButton(
-              onPressed: ()async {
-               final String? search = await  _showTextField(context);
-               if(search != null){
-                 context.read<ProductManager>().seach = search;
-               }
+          Consumer<ProductManager>(
+              builder: (_,productManager,__){
+                if(productManager.seach == null){
+                  return IconButton(
+                      onPressed: ()async {
+                        final String? search = await  _showTextField(context);
+                        if(search != null ){
+                          productManager.seach = search;
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.search,
+                      ));
+                }
 
+                else{
+                  return IconButton(
+                    onPressed: (){
+                      productManager.seach = null;
+                    }, icon: const Icon(Icons.close),
 
-              },
-              icon: const Icon(
-                Icons.search,
-              )),
+                  );
+                }
+              }
+          ),
           IconButton(onPressed: () {}, icon: const Icon(Icons.add))
         ],
       ),
       body: Consumer<ProductManager>(
         builder: (_, productManager, __) {
+          final filterProducts = productManager.filterProduct;
           return ListView.builder(
-              itemCount: productManager.allProducts.length,
+              itemCount: filterProducts.length,
               itemBuilder: (_, index) {
                 return ProductListTile(
-                    product: productManager.allProducts[index]);
+                    product: filterProducts[index]);
               });
         },
       ),

@@ -15,7 +15,37 @@ class ProductManager extends ChangeNotifier{
 
   set seach(String? value){
     _seach = value;
+    notifyListeners();
   }
+
+  List<Product> get filterProduct{
+    List<Product> filteredProducts = [];
+    if(seach == null || seach == ''){
+      filteredProducts.addAll(allProducts);
+    }else{
+      filteredProducts.addAll(
+          allProducts.where(
+                  (product){
+                    if(product.name != null && seach != null){
+                      return product.name!.toUpperCase().contains(seach!.toUpperCase());
+                    }else{
+                      return false;
+                    }
+
+                  }
+
+          )
+
+      );
+      return filteredProducts;
+
+    }
+
+
+    return filteredProducts;
+
+  }
+
 
 
   Future<void> _loadAllProducts()async{

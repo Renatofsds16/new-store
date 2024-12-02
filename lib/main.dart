@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:new_store/models/product.dart';
 import 'package:new_store/models/product_manager.dart';
 import 'package:new_store/models/user_manager.dart';
 import 'package:new_store/screens/screns_base/base_screens.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:new_store/screens/screns_base/login.dart';
+import 'package:new_store/screens/screns_base/product_screesns.dart';
 import 'package:new_store/screens/screns_base/sign_up.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -35,9 +37,14 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141)),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: (settings) {
+          final args = settings.arguments;
           switch (settings.name) {
             case '/signup':
               return MaterialPageRoute(builder: (_) => const SignUp());
+
+            case '/productScreens':
+              return MaterialPageRoute(builder: (_) => ProductScreesns(args: {'product':args as Product}));
+              
             case '/login':
               return MaterialPageRoute(builder: (_) => Login());
             case '/base':
