@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_store/models/product.dart';
 
+import '../../common/widgets/widget_size.dart';
+
 class ProductScreesns extends StatelessWidget {
   const ProductScreesns({super.key,required this.args});
   final Map<String,Product>? args;
@@ -53,6 +55,12 @@ class ProductScreesns extends StatelessWidget {
                 const Text('Descricao',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                 Text('${product.description}',style: const TextStyle(fontSize: 16)),
                 // itens de tamanhos aqui
+                const Text('Tamanhos',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                Wrap(
+                  children: [
+
+                  ],
+                ),
                 const SizedBox(
                   height: 100,
                 ),

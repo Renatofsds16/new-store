@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:new_store/models/item_size.dart';
 
 class Product{
   Product();
@@ -7,12 +8,24 @@ class Product{
     name = doc.get('name');
     description = doc.get('description');
     images = List<String>.from(doc.get('images'));
-    print(images);
+    sizes = doc.get('size').map((e){
+      return ItemSize.fromMap(e);
+    }).toList();
+    print(sizes);
+
   }
   String? _name;
   String? _id;
   String? _description;
   List<String>? _images;
+  List<dynamic>? _sizes;
+
+
+  List<dynamic>? get sizes => _sizes;
+
+  set sizes(List<dynamic>? value) {
+    _sizes = value;
+  }
 
   String? get name => _name;
 
