@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:new_store/models/item_size.dart';
-
-class Product{
+class Product extends ChangeNotifier{
   Product();
   Product.fromDocumentSnapshot(DocumentSnapshot doc){
     id = doc.id;
@@ -14,12 +14,21 @@ class Product{
     print(sizes);
 
   }
+
   String? _name;
   String? _id;
   String? _description;
   List<String>? _images;
   List<dynamic>? _sizes;
+  ItemSize? _selectedSize;
 
+
+  ItemSize? get selectedSize => _selectedSize;
+
+  set selectedSize(ItemSize? value) {
+    _selectedSize = value;
+    notifyListeners();
+  }
 
   List<dynamic>? get sizes => _sizes;
 
