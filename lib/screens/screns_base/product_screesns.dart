@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_store/models/item_size.dart';
 import 'package:new_store/models/product.dart';
+import 'package:new_store/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/widgets/widget_size.dart';
@@ -72,29 +73,46 @@ class ProductScreesns extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   Wrap(
                     spacing: 4,
-                    children: product!.sizes!.map((item){
+                    children: product!.sizes!.map((item) {
                       ItemSize itemSize = item as ItemSize;
-                      return WidgetSize(itemSize: itemSize,);
+                      return WidgetSize(
+                        itemSize: itemSize,
+                      );
                     }).toList(),
                   ),
                   const SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
+                  if(product.hasStock)
+                    Consumer2<UserManager, Product>(
+                      builder: (_, userManager, product, __) {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        primaryColor, // Altere para a cor desejada
+                                    foregroundColor: Colors.white, // Cor do texto
+                                  ),
+                                  onPressed:
+                                      product.selectedSize != null ? () {
+                                    if(userManager.loggedIn){
+                                      //adicionar ao carrinho aqui
 
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  primaryColor, // Altere para a cor desejada
-                              foregroundColor: Colors.white, // Cor do texto
-                            ),
-                            onPressed: null,
-                            child: const Text("adicionar ao carinho")),
-                      )
-                    ],
-                  )
+
+                                    }else{
+                                      Navigator.pushNamed(context, '/login');
+                                    }
+                                      } : null,
+                                  child: Text(userManager.loggedIn
+                                      ? 'adicionar ao carinho'
+                                      : 'entre para compra')),
+                            )
+                          ],
+                        );
+                      },
+                    )
                 ],
               ),
             )

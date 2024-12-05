@@ -22,6 +22,17 @@ class Product extends ChangeNotifier{
   List<dynamic>? _sizes;
   ItemSize? _selectedSize;
 
+  int get totalStock {
+    int stock = 0;
+    for(ItemSize size in sizes!){
+      stock += size.stock!;
+    }
+    return stock;
+  }
+
+  bool get hasStock => totalStock > 0;
+
+
 
   ItemSize? get selectedSize => _selectedSize;
 
