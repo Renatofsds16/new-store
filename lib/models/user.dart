@@ -38,6 +38,8 @@ class UserLogged{
   }
   DocumentReference get firestoreRef => _db.collection('users').doc(id);
 
+  CollectionReference get cartReference => firestoreRef.collection('cart');
+
 
 
   String? get id => _id;

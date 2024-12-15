@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_store/models/cart_manage.dart';
 import 'package:new_store/models/item_size.dart';
 import 'package:new_store/models/product.dart';
 import 'package:new_store/models/user_manager.dart';
@@ -99,8 +100,8 @@ class ProductScreesns extends StatelessWidget {
                                       product.selectedSize != null ? () {
                                     if(userManager.loggedIn){
                                       //adicionar ao carrinho aqui
-
-
+                                      context.read<CartManager>().addToCartProduct(product);
+                                      Navigator.pushNamed(context,'/cart');
                                     }else{
                                       Navigator.pushNamed(context, '/login');
                                     }
@@ -118,9 +119,11 @@ class ProductScreesns extends StatelessWidget {
             )
           ],
         ),
+
       ),
     );
   }
+
 
   List<String> listImage(List<String>? list) {
     List<String> images = [];
@@ -131,4 +134,5 @@ class ProductScreesns extends StatelessWidget {
     }
     return images;
   }
+
 }

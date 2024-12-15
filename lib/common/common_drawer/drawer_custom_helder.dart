@@ -14,9 +14,7 @@ class DrawerCustomHelder extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(32, 16, 8, 32),
       child: Consumer<UserManager>(
         builder: (_, userManager, __) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          return ListView(
             children: [
               Text(
                 'Loja do\n ${userManager.userLogged?.name ?? ''}',

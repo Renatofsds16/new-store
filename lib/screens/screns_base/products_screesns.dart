@@ -81,6 +81,12 @@ class ProductsScreesns extends StatelessWidget {
               });
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: Theme.of(context).primaryColor,
+        shape: const StadiumBorder(),
+        backgroundColor: Colors.white,
+        onPressed: (){Navigator.pushNamed(context, '/cart');},child: const Icon(Icons.shopping_cart),
+      ),
     );
   }
 

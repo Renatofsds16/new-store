@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
         centerTitle: true,
         actions: [
           TextButton(onPressed: (){
-            Navigator.pushNamed(context,'signup');
+            Navigator.pushNamed(context,'/signup');
 
           }, child: const Text('Criar conta',style: TextStyle(color: Colors.black,fontSize: 18)))
         ],

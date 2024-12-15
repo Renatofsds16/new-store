@@ -11,7 +11,6 @@ class Product extends ChangeNotifier{
     sizes = doc.get('size').map((e){
       return ItemSize.fromMap(e);
     }).toList();
-    print(sizes);
 
   }
 
@@ -27,10 +26,26 @@ class Product extends ChangeNotifier{
     for(ItemSize size in sizes!){
       stock += size.stock!;
     }
+    print(stock);
+    print('///////////////////////////////////////////************************');
+    print('///////////////////////////////////////////************************');
+    print('///////////////////////////////////////////************************');
+    print('///////////////////////////////////////////************************');
+    print('///////////////////////////////////////////************************');
+    print('///////////////////////////////////////////************************');
     return stock;
   }
+  ItemSize? findSize(String name){
+    try {
+      return sizes?.firstWhere((item)=>item.name == name);
+    }catch(e){
+      return null;
+    }
+  }
 
-  bool get hasStock => totalStock > 0;
+  bool get hasStock {
+    return totalStock > 0;
+  }
 
 
 

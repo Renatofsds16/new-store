@@ -11,6 +11,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final UserLogged _userLogged = UserLogged();
 
@@ -134,6 +135,7 @@ class _SignUpState extends State<SignUp> {
                         context
                             .read<UserManager>()
                             .signUp(_userLogged, _snackBarError, () {debugPrint('sucesso');});
+                        Navigator.pushNamedAndRemoveUntil(context, '/base,', (_)=>false);
                       }
                     },
                     child: const Text(
