@@ -97,10 +97,10 @@ class ProductScreesns extends StatelessWidget {
                                     foregroundColor: Colors.white, // Cor do texto
                                   ),
                                   onPressed:
-                                      product.selectedSize != null ? () {
+                                      product.selectedSize != null ? () async {
                                     if(userManager.loggedIn){
                                       //adicionar ao carrinho aqui
-                                      context.read<CartManager>().addToCartProduct(product);
+                                      await context.read<CartManager>().addToCartProduct(product);
                                       Navigator.pushNamed(context,'/cart');
                                     }else{
                                       Navigator.pushNamed(context, '/login');

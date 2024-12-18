@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:new_store/models/item_size.dart';
 import 'package:new_store/models/product.dart';
 
-class CartProduct{
+class CartProduct extends ChangeNotifier{
   CartProduct.fromProduct({required this.product }){
     idProduct = product?.id;
     size = product?.selectedSize?.name;
     quantity = 1;
   }
   CartProduct.fromDocumentSnapshot(DocumentSnapshot documentSnapshot){
+    id = documentSnapshot.id;
     idProduct = documentSnapshot.get('pid');
     size = documentSnapshot.get('size');
     quantity = documentSnapshot.get('quantity');
@@ -21,9 +23,10 @@ class CartProduct{
     );
   }
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  String? _id;
   String? _size;
   String? _idProduct;
-  int? _quantity;
+  int _quantity = 0;
 
 
   ItemSize? get itemSize{
@@ -51,6 +54,9 @@ class CartProduct{
     }
     return 0.0;
   }
+  num get totalPrice {
+    return unitPrice! * quantity;
+  }
 
   String? get size => _size;
 
@@ -65,9 +71,31 @@ class CartProduct{
   set idProduct(String? value) {
     _idProduct = value!;
     }
-    int? get quantity => _quantity;
+    int get quantity => _quantity;
 
-  set quantity(int? value) {
+  set quantity(int value) {
     _quantity = value;
   }
+  increment(){
+    quantity++;
+    notifyListeners();
+  }
+  decrement(){
+    quantity--;
+    notifyListeners();
+  }
+  bool get hasStock {
+    final size = itemSize;
+    if(size == null) return false;
+    return size.stock! >= quantity;
+
+  }
+
+  String? get id => _id;
+
+  set id(String? value) {
+    _id = value;
+    notifyListeners();
+  }
+
 }
