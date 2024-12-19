@@ -17,6 +17,7 @@ class CartProduct extends ChangeNotifier{
     firebaseFirestore.collection('products').doc(idProduct).get().then(
         (element){
           product = Product.fromDocumentSnapshot(element);
+          notifyListeners();
 
         }
 

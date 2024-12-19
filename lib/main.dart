@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:new_store/models/cart_manage.dart';
+import 'package:new_store/models/home_manage.dart';
 import 'package:new_store/models/product.dart';
 import 'package:new_store/models/product_manager.dart';
 import 'package:new_store/models/user_manager.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_)=>UserManager(),lazy: false,),
+        Provider(create: (_)=>HomeManager(),lazy: false,),
         ChangeNotifierProvider(create: (_)=>ProductManager(),lazy: false,),
         ChangeNotifierProxyProvider<UserManager,CartManager?>(create: (_)=>CartManager(),
           lazy: false,

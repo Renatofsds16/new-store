@@ -59,11 +59,8 @@ class CartManager extends ChangeNotifier{
       productsTotalPrice += cartProduct.totalPrice;
       _updateCartProduct(cartProduct);
     }
-    print(productsTotalPrice);
-    print('/////////////////////////////////');
-    print('/////////////////////////////////');
-    print('/////////////////////////////////');
-    print('/////////////////////////////////');
+    notifyListeners();
+
   }
   Future<void> _updateCartProduct(CartProduct cartProduct)async{
     if(cartProduct.id != null){
