@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:new_store/models/home_manage.dart';
+import 'package:provider/provider.dart';
 
 import '../../../common/common_drawer/drawer_custom.dart';
+import '../section_list.dart';
 
 class HomeScreens extends StatelessWidget {
-  const HomeScreens({super.key});
+  HomeScreens({super.key});
+
+  List<Widget> teste = [Text('1'),Text('jfdkdkkjkfdjk'),Text('2')];
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +43,24 @@ class HomeScreens extends StatelessWidget {
                       icon: const Icon(Icons.shopping_cart))
                 ],
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 2000,
-                  width: 200,
-                ),
+              Consumer<HomeManager>(
+                builder: (_, homeManager,__) {
+                  final  List<Widget> children = homeManager.sections.map((section){
+                    switch(section.type){
+                      case 'list':
+                        return SectionList(section: section,);
+                      case 'staggered':
+                        return Container();
+                      default:
+                        return Container();
+                    }
+
+                  }).toList();
+                  return SliverList(
+                      delegate: SliverChildListDelegate(children)
+                  );
+                },
+
               )
             ],
           )

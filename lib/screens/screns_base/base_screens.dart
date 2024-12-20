@@ -21,7 +21,7 @@ class BaseScreens extends StatelessWidget {
         body: PageView(
           controller: _pageController,
           children: [
-            const HomeScreens(),
+            HomeScreens(),
             const ProductsScreesns(),
             Container(
               color: Colors.amber,
