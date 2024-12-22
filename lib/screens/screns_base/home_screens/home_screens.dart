@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_store/common/widgets/section_grid_view.dart';
 import 'package:new_store/models/home_manage.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +9,6 @@ import '../section_list.dart';
 class HomeScreens extends StatelessWidget {
   HomeScreens({super.key});
 
-  List<Widget> teste = [Text('1'),Text('jfdkdkkjkfdjk'),Text('2')];
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,13 @@ class HomeScreens extends StatelessWidget {
           CustomScrollView(
             slivers: [
               SliverAppBar(
+                iconTheme: const IconThemeData(color: Colors.white),
                 elevation: 0,
                 snap: true,
                 floating: true,
                 backgroundColor: Colors.transparent,
                 flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('loja do Renato'),
+                  title: Text('loja do Renato',style: TextStyle(color: Colors.white),),
                   centerTitle: true,
                 ),
                 actions: [
@@ -40,7 +41,7 @@ class HomeScreens extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pushNamed('/cart');
                       },
-                      icon: const Icon(Icons.shopping_cart))
+                      icon: const Icon(Icons.shopping_cart,color: Colors.white,))
                 ],
               ),
               Consumer<HomeManager>(
@@ -50,7 +51,7 @@ class HomeScreens extends StatelessWidget {
                       case 'list':
                         return SectionList(section: section,);
                       case 'staggered':
-                        return Container();
+                        return SectionGridView(section: section);
                       default:
                         return Container();
                     }

@@ -19,6 +19,7 @@ class BaseScreens extends StatelessWidget {
           PageManager(pageController: _pageController),
       child: Scaffold(
         body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
           children: [
             HomeScreens(),

@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:new_store/models/section.dart';
 
-class HomeManager{
+class HomeManager extends ChangeNotifier{
   HomeManager(){
     _loadingSections();
   }
@@ -16,6 +17,7 @@ class HomeManager{
       for(DocumentSnapshot documentSnapshot in snapshot.docs){
         sections.add(Section.fromDocument(documentSnapshot));
       }
+      notifyListeners();
     });
 
   }
