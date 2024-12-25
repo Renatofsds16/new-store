@@ -1,4 +1,6 @@
  import 'package:flutter/material.dart';
+import 'package:new_store/models/user_manager.dart';
+import 'package:provider/provider.dart';
 
 import 'drawer_custom_helder.dart';
 import 'drawertile.dart';
@@ -10,7 +12,6 @@ class DrawerCusnton extends StatelessWidget {
   Widget build(BuildContext context) {
     return
         Drawer(
-
           child: Stack(
             children: [
               Container(
@@ -35,6 +36,19 @@ class DrawerCusnton extends StatelessWidget {
                   const Drawertile(iconData: Icons.list, title: 'Produtos',page: 1,),
                   const Drawertile(iconData: Icons.playlist_add_check, title: 'meus pedidos',page: 2,),
                   const Drawertile(iconData: Icons.location_on, title: 'lojas',page: 3),
+                  Consumer<UserManager>(
+                      builder: (_,userManager,__){
+                        if(userManager.adminEnabled){
+                          return const Column(
+                             children: [
+                              Drawertile(iconData: Icons.settings, title: "Usuarios", page: 4),
+                              Drawertile(iconData: Icons.settings, title: 'Pedidos', page: 5),
+                            ],
+                          );
+                        }
+                        return Container();
+                      }
+                  )
                 ],
               )
 

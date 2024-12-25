@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:new_store/models/user.dart';
-
 import '../helps/erros_firebase_auth.dart';
 
 class UserManager extends ChangeNotifier{
@@ -38,6 +36,8 @@ class UserManager extends ChangeNotifier{
 
 
     }
+
+
     setLoading(false);
 
   }
@@ -51,11 +51,6 @@ class UserManager extends ChangeNotifier{
               .createUserWithEmailAndPassword(email: user.email!, password: user.password!);
           user.id = userCredential.user?.uid;
           await user.saveData();
-          print('voce se cadastrou no firebase');
-          print('voce se cadastrou no firebase');
-          print('voce se cadastrou no firebase');
-          print('voce se cadastrou no firebase');
-          print('voce se cadastrou no firebase');
 
           onSuccess();
         }
@@ -80,6 +75,10 @@ class UserManager extends ChangeNotifier{
          .doc(user.uid)
          .get();
      userLogged = UserLogged.fromDocument(documentSnapshot);
+     final docAdmin = await _db.collection('admins').doc(userLogged?.id).get();
+     if(docAdmin.exists){
+       userLogged?.admin = true;
+     }
       notifyListeners();
     }
   }
@@ -88,4 +87,5 @@ class UserManager extends ChangeNotifier{
     userLogged = null;
     notifyListeners();
   }
+  bool get adminEnabled => userLogged != null && userLogged!.admin;
 }

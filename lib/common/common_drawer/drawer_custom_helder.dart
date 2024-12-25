@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_store/models/page_manager.dart';
 import 'package:new_store/models/user_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +31,7 @@ class DrawerCustomHelder extends StatelessWidget {
                 onTap: () {
                   if(userManager.loggedIn){
                     //Sair aqui
+                    context.read<PageManager>().setPage(0);
                     userManager.signOut();
                   }else{
                     Navigator.pushNamed(context, '/login');

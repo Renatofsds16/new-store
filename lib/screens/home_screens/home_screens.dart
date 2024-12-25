@@ -3,8 +3,8 @@ import 'package:new_store/common/widgets/section_grid_view.dart';
 import 'package:new_store/models/home_manage.dart';
 import 'package:provider/provider.dart';
 
-import '../../../common/common_drawer/drawer_custom.dart';
-import '../section_list.dart';
+import '../../common/common_drawer/drawer_custom.dart';
+import '../../common/widgets/section_list.dart';
 
 class HomeScreens extends StatelessWidget {
   HomeScreens({super.key});

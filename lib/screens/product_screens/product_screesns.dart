@@ -32,6 +32,22 @@ class ProductScreesns extends StatelessWidget {
                 color: Colors.white,
               )),
           centerTitle: true,
+          actions: [
+            Consumer<UserManager>(builder: (_, userManager, __) {
+              if (userManager.adminEnabled) {
+                return IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/editProductScreens',arguments: product);
+                    },
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ));
+              } else {
+                return Container();
+              }
+            })
+          ],
         ),
         body: ListView(
           children: [
@@ -84,7 +100,7 @@ class ProductScreesns extends StatelessWidget {
                   const SizedBox(
                     height: 50,
                   ),
-                  if(product.hasStock)
+                  if (product.hasStock)
                     Consumer2<UserManager, Product>(
                       builder: (_, userManager, product, __) {
                         return Row(
@@ -94,18 +110,24 @@ class ProductScreesns extends StatelessWidget {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
                                         primaryColor, // Altere para a cor desejada
-                                    foregroundColor: Colors.white, // Cor do texto
+                                    foregroundColor:
+                                        Colors.white, // Cor do texto
                                   ),
-                                  onPressed:
-                                      product.selectedSize != null ? () async {
-                                    if(userManager.loggedIn){
-                                      //adicionar ao carrinho aqui
-                                      await context.read<CartManager>().addToCartProduct(product);
-                                      Navigator.pushNamed(context,'/cart');
-                                    }else{
-                                      Navigator.pushNamed(context, '/login');
-                                    }
-                                      } : null,
+                                  onPressed: product.selectedSize != null
+                                      ? () async {
+                                          if (userManager.loggedIn) {
+                                            //adicionar ao carrinho aqui
+                                            await context
+                                                .read<CartManager>()
+                                                .addToCartProduct(product);
+                                            Navigator.pushNamed(
+                                                context, '/cart');
+                                          } else {
+                                            Navigator.pushNamed(
+                                                context, '/login');
+                                          }
+                                        }
+                                      : null,
                                   child: Text(userManager.loggedIn
                                       ? 'adicionar ao carinho'
                                       : 'entre para compra')),
@@ -119,11 +141,9 @@ class ProductScreesns extends StatelessWidget {
             )
           ],
         ),
-
       ),
     );
   }
-
 
   List<String> listImage(List<String>? list) {
     List<String> images = [];
@@ -134,5 +154,4 @@ class ProductScreesns extends StatelessWidget {
     }
     return images;
   }
-
 }

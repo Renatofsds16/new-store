@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
-class UserLogged{
+class UserLogged extends ChangeNotifier{
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   UserLogged();
   UserLogged.firebase(User? user){
@@ -23,6 +24,7 @@ class UserLogged{
   String? _name;
   String? _email;
   String? _password;
+  bool _admin = false;
 
 
   saveData()async {
@@ -64,5 +66,12 @@ class UserLogged{
 
   set name(String? value) {
     _name = value;
+  }
+
+  bool get admin => _admin;
+
+  set admin(bool value) {
+    _admin = value;
+    notifyListeners();
   }
 }

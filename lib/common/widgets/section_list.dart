@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_store/common/widgets/item_tile.dart';
 import 'package:new_store/models/section.dart';
 
-import '../../common/widgets/section_header.dart';
+import 'section_header.dart';
 
 class SectionList extends StatelessWidget {
   SectionList({super.key,required this.section});
