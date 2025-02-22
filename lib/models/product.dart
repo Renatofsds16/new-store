@@ -8,7 +8,7 @@ class Product extends ChangeNotifier{
     name = doc.get('name');
     description = doc.get('description');
     images = List<String>.from(doc.get('images'));
-    sizes = doc.get('size').map((e){
+    sizes = doc.get('sizes').map((e){
       return ItemSize.fromMap(e);
     }).toList();
 

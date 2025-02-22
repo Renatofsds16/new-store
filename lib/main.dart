@@ -14,12 +14,12 @@ import 'package:new_store/screens/login_screens/login.dart';
 import 'package:new_store/screens/product_screens/product_screesns.dart';
 import 'package:new_store/screens/sign_up_screens/sign_up.dart';
 import 'package:provider/provider.dart';
-//import 'firebase_options.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    //options: DefaultFirebaseOptions.currentPlatform,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
 }

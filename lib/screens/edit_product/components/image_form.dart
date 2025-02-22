@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_store/models/product.dart';
 import 'dart:io';
+
+import 'image_source_sheet.dart';
 
 class ImageForm extends StatelessWidget {
   const ImageForm({super.key, required this.product});
@@ -8,36 +11,76 @@ class ImageForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double largura = MediaQuery.of(context).size.width;
-    return FormField<List>(
-        initialValue: product.images,
-        builder: (state) {
-          return SingleChildScrollView(
+
+    return FormField<List<dynamic>>(
+      initialValue: List.from(product.images!),
+      builder: (state) {
+        void onImageSelected(File file) {
+          state.value?.add(file);
+          state.didChange(state.value);
+          Navigator.of(context).pop();
+        }
+        return SizedBox(
+          height: 400,
+          child: ListView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: state.value!.map((img) {
-                return SizedBox(
-                  width: largura * 2,
-                  height: largura,
+            shrinkWrap: true,
+            children: state.value!.map<Widget>((image) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: AspectRatio(
+                  aspectRatio: 1,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      //Image.network(img),
-                      if(img is String)
-                        Image.network(img)
+                      if (image is String)
+                        Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                        )
                       else
-                        Image.file(img),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: IconButton(
-                            onPressed: () {}, icon: const Icon(Icons.remove)),
-                      )
+                        Image.file(image),
+                      Positioned(
+                          top: 10,
+                          right: 10,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              state.value!.remove(image);
+                              state.didChange(state.value);
+                            },
+                            child: const Text(
+                              'Remover',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ))
                     ],
                   ),
-                );
-              }).toList(),
-            ),
-          );
-        });
+                ),
+              );
+            }).toList()
+              ..add(AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  color: Colors.grey[200],
+                  child: IconButton(
+                      onPressed: () {
+                        if(Platform.isAndroid){
+                          showModalBottomSheet(context: context, builder: (context)=> ImageSourceSheet(onImageSelected: onImageSelected,));
+                        }else{
+                          showCupertinoModalPopup(context: context, builder: (context)=> ImageSourceSheet(onImageSelected: onImageSelected,));
+                        }
+
+                      },
+                      icon: Icon(
+                        Icons.add_a_photo,
+                        color: Theme.of(context).primaryColor,
+                        size: 50,
+                      )),
+                ),
+              )),
+          ),
+        );
+      },
+    );
   }
 }

@@ -10,10 +10,11 @@ class EditProductScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).primaryColor;
+    print(product.images);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text('Edita Produto',style: TextStyle(color: Colors.white),),
+        title: const Text('Edita Anuncio',style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: color,
       ),

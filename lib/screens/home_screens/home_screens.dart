@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:new_store/common/widgets/section_grid_view.dart';
 import 'package:new_store/models/home_manage.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,7 @@ import '../../common/common_drawer/drawer_custom.dart';
 import '../../common/widgets/section_list.dart';
 
 class HomeScreens extends StatelessWidget {
-  HomeScreens({super.key});
+  const HomeScreens({super.key});
 
 
   @override
@@ -48,10 +49,11 @@ class HomeScreens extends StatelessWidget {
                 builder: (_, homeManager,__) {
                   final  List<Widget> children = homeManager.sections.map((section){
                     switch(section.type){
-                      case 'list':
-                        return SectionList(section: section,);
-                      case 'staggered':
+                      case 'Staggered':
                         return SectionGridView(section: section);
+                      case 'List':
+                        return SectionList(section: section,);
+
                       default:
                         return Container();
                     }
@@ -67,6 +69,10 @@ class HomeScreens extends StatelessWidget {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: ()async {
+        ImagePicker imagePicker = ImagePicker();
+        await imagePicker.pickImage(source: ImageSource.camera);
+      },child: const Icon(Icons.camera_alt),),
     );
   }
 }

@@ -19,7 +19,7 @@ class SectionGridView extends StatelessWidget {
       children: [
         SectionHeader(section: section),
         //coluna grid view
-        // TODO: FAZER GRID VIEW DEPOIS VER DOCUMENTACAO
+        // TODO: FAZER GRID VIEW DEPOIS VER DOCUMENTACAO CIRCLE AVATA PROVISORIO
         ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 0),
           shrinkWrap: true,
